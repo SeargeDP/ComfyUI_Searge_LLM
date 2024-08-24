@@ -1,66 +1,75 @@
-## LLM_Node for ComfyUI
-The `LLM_Node` enhances ComfyUI by integrating advanced language model capabilities, enabling a wide range of NLP tasks such as text generation, content summarization, question answering, and more. This flexibility is powered by various transformer model architectures from the transformers library, allowing for the deployment of models like T5, GPT-2, and others based on your project's needs.
+# Searge-LLM for ComfyUI v1.0
 
-## Features
-- **Versatile Text Generation:** Leverage state-of-the-art transformer models for dynamic text generation, adaptable to a wide range of NLP tasks.
-- **Customizable Model and Tokenizer Paths:** Specify paths within the `models/LLM_checkpoints` directory for using specialized models tailored to specific tasks.
-- **Dynamic Token Limit and Generation Parameters:** Control the length of generated content and fine-tune generation with parameters such as `temperature`, `top_p`, `top_k`, and `repetition_penalty`.
-- **Device-Specific Optimizations:** Automatically utilize `bfloat16` on compatible CUDA devices for enhanced performance.
-- **Seamless Integration:** Designed for easy integration into ComfyUI workflows, enriching applications with powerful NLP functionalities.
+A prompt-generator or prompt-improvement node for ComfyUI, utilizing the power of a language model to turn a provided
+text-to-image prompt into a more detailed and improved prompt.
 
-## Installation
-This Node is designed for use within ComfyUI. Ensure ComfyUI is installed and operational in your environment. 
+## Install the language model
+- Create a new folder called `llm_gguf` in the `ComfyUI/models` directory.
+- Download the file `Mistral-7B-Instruct-v0.3.Q4_K_M.gguf` **(4.37 GB)**.
+  from the repository `MaziyarPanahi/Mistral-7B-Instruct-v0.3-GGUF` on HuggingFace.
+  - [download link to the gguf model](https://huggingface.co/MaziyarPanahi/Mistral-7B-Instruct-v0.3-GGUF/resolve/main/Mistral-7B-Instruct-v0.3.Q4_K_M.gguf)
+- place `Mistral-7B-Instruct-v0.3.Q4_K_M.gguf` in the `ComfyUI/models/llm_gguf` directory.
 
-1. **Prepare the Models Directory:**
-   - Create a `LLM_checkpoints` directory within the `models` directory of your ComfyUI environment.
-   - Place your transformer model directories in `LLM_checkpoints`. Each directory should contain the necessary model and tokenizer files.
+### Note
+- Currently the node requires the language model as a `gguf` file and only works with models that are
+  supported by `llama-cpp-python`.
 
-2. **Node Integration:**
-   - Copy the `LLM_Node` class file into the `custom_nodes` directory accessible by your ComfyUI project.
+## Potential problems
+(this was only tested this on Windows)
 
-## Configuration
-Configure the LLM_Node with the necessary parameters within your ComfyUI project to utilize its capabilities fully:
+If you get error message about missing `llama-cpp`, try these manual steps:
+
+- These instruction are assuming that you use the portable version of ComfyUI, otherwise make sure to run these commands
+  in the pything v-env that you're using for ComfyUI.
+- Open a command line interface in the directory `ComfyUI_windows_portable/python_embeded`.
+- It's important to run these commands in the `ComfyUI_windows_portable/python_embeded` directory.
+- Run the following commands:
+```
+python -m pip install https://github.com/oobabooga/llama-cpp-python-cuBLAS-wheels/releases/download/cpu/llama_cpp_python-0.2.89+cpuavx2-cp311-cp311-win_amd64.whl
+python -m pip install https://github.com/oobabooga/llama-cpp-python-cuBLAS-wheels/releases/download/textgen-webui/llama_cpp_python_cuda-0.2.89+cu121-cp311-cp311-win_amd64.whl
+```
+
+## Searge LLM Node
+Configure the `Searge_LLM_Node` with the necessary parameters within your ComfyUI project to utilize its capabilities
+fully:
 
 - `text`: The input text for the language model to process.
-- `model`: The directory name of the model within `models/LLM_checkpoints` you wish to use.
+- `model`: The directory name of the model within `models/llm_gguf` you wish to use.
 - `max_tokens`: Maximum number of tokens for the generated text, adjustable according to your needs.
+- `apply_instructions`: 
+- `instructions`: The instructions for the language model to generate a prompt. It supports the placeholder
+  `{prompt}` to insert the prompt from the `text` input.
+  **Example:** `Generate a prompt from "{prompt}"`
 
-- Advanced Options Node (`AdvOptions`): 
-  - Fine-tune the generation process with parameters such as `temperature`, `top_p`, `top_k`, and `repetition_penalty`.
-  - Control security via `trust_remote_code` and performance through `torch_dtype`.
+## Advanced Options Node 
+The `Searge_AdvOptionsNode` offers a range of configurable parameters allowing for precise control over the text
+generation process and model behavior.
 
-## Advanced Configuration Parameters
+*The default values on this node are also the defaults that `Searge_LLM_Node`*
+*uses when no `Searge_AdvOptionsNode` is connected to it.*
 
-The `LLM_Node` offers a range of configurable parameters allowing for precise control over the text generation process and model behavior. Below is a detailed overview of these parameters:
+Below is a detailed overview of these parameters:
 
-- **Temperature (`temperature`):** Controls the randomness in the text generation process. Lower values make the model more confident in its predictions, leading to less variability in output. Higher values increase diversity but can also introduce more randomness. Default: `1.0`.
+- **Temperature (`temperature`):** Controls the randomness in the text generation process. Lower values make the model
+  more confident in its predictions, leading to less variability in output. Higher values increase diversity but can
+  also introduce more randomness. Default: `1.0`.
+- **Top-p (`top_p`):** Also known as nucleus sampling, this parameter controls the cumulative probability distribution
+  cutoff. The model will only consider the top p% of tokens with the highest probabilities for sampling. Reducing this
+  value helps in controlling the generation quality by avoiding low-probability tokens. Default: `0.9`.
+- **Top-k (`top_k`):** Limits the number of highest probability tokens considered for each step of the generation. A
+  value of `0` means no limit. This parameter can prevent the model from focusing too narrowly on the top choices,
+  promoting diversity in the generated text. Default: `50`.
+- **Repetition Penalty (`repetition_penalty`):** Adjusts the likelihood of tokens that have already appeared in the
+  output, discouraging repetition. Values greater than `1` penalize tokens that have been used, making them less likely
+  to appear again. Default: `1.2`.
 
-- **Top-p (`top_p`):** Also known as nucleus sampling, this parameter controls the cumulative probability distribution cutoff. The model will only consider the top p% of tokens with the highest probabilities for sampling. Reducing this value helps in controlling the generation quality by avoiding low-probability tokens. Default: `0.9`.
-
-- **Top-k (`top_k`):** Limits the number of highest probability tokens considered for each step of the generation. A value of `0` means no limit. This parameter can prevent the model from focusing too narrowly on the top choices, promoting diversity in the generated text. Default: `50`.
-
-- **Repetition Penalty (`repetition_penalty`):** Adjusts the likelihood of tokens that have already appeared in the output, discouraging repetition. Values greater than `1` penalize tokens that have been used, making them less likely to appear again. Default: `1.2`.
-
-- **Trust Remote Code (`trust_remote_code`):** A security parameter that allows or prevents the execution of remote code within loaded models. It is crucial for safely using models from untrusted or unknown sources. Setting this to `True` may introduce security risks. Default: `False`.
-
-- **Torch Data Type (`torch_dtype`):** Specifies the tensor data type for calculations within the model. Options include `"float32"`, `"bfloat16"`, `"float16"`, `"float64"`, or `"auto"` for automatic selection based on device capabilities. Using `"bfloat16"` or `"float16"` can significantly reduce memory usage and increase computation speed on compatible hardware. Default: `"auto"`.
-
-These parameters provide granular control over the text generation capabilities of the `LLM_Node`, allowing users to fine-tune the behavior of the underlying models to best fit their application requirements.
-
-## Quantization Config Node
-
-The Quantization Config Node offers options for model quantization, balancing performance and precision. For configurations and usage, check https://huggingface.co/docs/transformers/main_classes/quantization#transformers.BitsAndBytesConfig
-
-## Output Node
-
-The Output Node is a new addition that formats the generated text to ensure it is presented in a clear and readable manner. It handles the arrangement of text, spacing, and alignment, significantly improving the output's usability for further processing or display.
-
-## Contributing
-Contributions to enhance the LLM_Node, add support for more models, or improve functionality are welcome. Please adhere to the project's contribution guidelines when submitting pull requests.
+These parameters provide granular control over the text generation capabilities of the `Searge_LLM_Node`, allowing
+users to fine-tune the behavior of the underlying models to best fit their application requirements.
 
 ## License
-The LLM_Node is released under the MIT License. Feel free to use and modify it for your personal or commercial projects.
+The Searge_LLM_Node is released under the MIT License. Feel free to use and modify it for your personal or commercial
+projects.
 
 ## Acknowledgments
-- Special thanks to the open-source community and the developers behind the transformers library for providing the foundational tools that make this Node possible.
-- Appreciation to the ComfyUI team for their support and contributions to integrating complex NLP functionalities seamlessly.
+- Based on the LLM_Node custom extension by Big-Idea-Technology, found
+  [here on Github](https://github.com/Big-Idea-Technology/ComfyUI_LLM_Node)
