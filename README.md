@@ -3,6 +3,8 @@
 A prompt-generator or prompt-improvement node for ComfyUI, utilizing the power of a language model to turn a provided
 text-to-image prompt into a more detailed and improved prompt.
 
+![Custom node Searge-LLM for ComfyUI](img/SeargeLLM-Flux.jpg "Searge-LLM for ComfyUI Logo")
+
 ## Install the language model
 - Create a new folder called `llm_gguf` in the `ComfyUI/models` directory.
 - Download the file `Mistral-7B-Instruct-v0.3.Q4_K_M.gguf` **(4.37 GB)**.
