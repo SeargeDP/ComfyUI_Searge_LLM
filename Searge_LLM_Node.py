@@ -49,8 +49,8 @@ class Searge_LLM_Node:
 
     CATEGORY = "Searge-LLM"
     FUNCTION = "main"
-    RETURN_TYPES = ("STRING",)
-    RETURN_NAMES = ("string",)
+    RETURN_TYPES = ("STRING", "STRING",)
+    RETURN_NAMES = ("generated", "original",)
 
     def main(self, text, random_seed, model, max_tokens, apply_instructions, instructions, adv_options_config=None):
         model_path = os.path.join(GLOBAL_MODELS_DIR, model)
@@ -175,9 +175,9 @@ class Searge_LLM_Node:
 
             llm_result = model_to_use.create_chat_completion(messages, **generate_kwargs)
 
-            return (llm_result['choices'][0]['message']['content'].strip(),)
+            return (llm_result['choices'][0]['message']['content'].strip(), text)
         else:
-            return ("NOT A GGUF MODEL",)
+            return ("NOT A GGUF MODEL", text)
 
 
 class Searge_Output_Node:

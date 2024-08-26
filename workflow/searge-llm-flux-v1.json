@@ -1,6 +1,6 @@
 {
-  "last_node_id": 28,
-  "last_link_id": 41,
+  "last_node_id": 32,
+  "last_link_id": 46,
   "nodes": [
     {
       "id": 3,
@@ -16,7 +16,7 @@
       "flags": {
         "pinned": true
       },
-      "order": 8,
+      "order": 9,
       "mode": 0,
       "inputs": [
         {
@@ -116,7 +116,7 @@
       "flags": {
         "pinned": true
       },
-      "order": 9,
+      "order": 10,
       "mode": 0,
       "inputs": [
         {
@@ -160,7 +160,7 @@
       "flags": {
         "pinned": true
       },
-      "order": 10,
+      "order": 11,
       "mode": 0,
       "inputs": [
         {
@@ -272,13 +272,13 @@
       "flags": {
         "pinned": true
       },
-      "order": 6,
+      "order": 7,
       "mode": 0,
       "inputs": [
         {
           "name": "text",
           "type": "*",
-          "link": 33
+          "link": 44
         }
       ],
       "properties": {
@@ -287,56 +287,6 @@
       "widgets_values": [
         ""
       ]
-    },
-    {
-      "id": 25,
-      "type": "Searge_LLM_Node",
-      "pos": [
-        10,
-        360
-      ],
-      "size": {
-        "0": 340,
-        "1": 510
-      },
-      "flags": {
-        "pinned": true
-      },
-      "order": 4,
-      "mode": 0,
-      "inputs": [
-        {
-          "name": "adv_options_config",
-          "type": "SRGADVOPTIONSCONFIG",
-          "link": null
-        }
-      ],
-      "outputs": [
-        {
-          "name": "string",
-          "type": "STRING",
-          "links": [
-            33,
-            38,
-            39
-          ],
-          "slot_index": 0,
-          "shape": 3
-        }
-      ],
-      "properties": {
-        "Node name for S&R": "Searge_LLM_Node"
-      },
-      "widgets_values": [
-        "A psychedelic animal frozen in a frosted jar on a wooden table, sci-fi, wide angle",
-        1337,
-        "Mistral-7B-Instruct-v0.3.Q4_K_M.gguf",
-        4096,
-        true,
-        "Generate a prompt from \"{prompt}\""
-      ],
-      "color": "#232",
-      "bgcolor": "#353"
     },
     {
       "id": 26,
@@ -384,7 +334,7 @@
         40
       ],
       "size": {
-        "0": 315,
+        "0": 340,
         "1": 82
       },
       "flags": {
@@ -420,14 +370,14 @@
         370,
         210
       ],
-      "size": [
-        430,
-        110
-      ],
+      "size": {
+        "0": 430,
+        "1": 110
+      },
       "flags": {
         "pinned": true
       },
-      "order": 7,
+      "order": 8,
       "mode": 0,
       "inputs": [
         {
@@ -438,7 +388,7 @@
         {
           "name": "clip_l",
           "type": "STRING",
-          "link": 38,
+          "link": 45,
           "widget": {
             "name": "clip_l"
           }
@@ -446,7 +396,7 @@
         {
           "name": "t5xxl",
           "type": "STRING",
-          "link": 39,
+          "link": 46,
           "widget": {
             "name": "t5xxl"
           }
@@ -460,8 +410,8 @@
             40,
             41
           ],
-          "shape": 3,
-          "slot_index": 0
+          "slot_index": 0,
+          "shape": 3
         }
       ],
       "properties": {
@@ -474,6 +424,109 @@
       ],
       "color": "#432",
       "bgcolor": "#653"
+    },
+    {
+      "id": 31,
+      "type": "PrimitiveNode",
+      "pos": [
+        850,
+        680
+      ],
+      "size": {
+        "0": 319.20001220703125,
+        "1": 82
+      },
+      "flags": {
+        "pinned": true
+      },
+      "order": 4,
+      "mode": 0,
+      "outputs": [
+        {
+          "name": "INT",
+          "type": "INT",
+          "links": [
+            43
+          ],
+          "widget": {
+            "name": "random_seed"
+          }
+        }
+      ],
+      "title": "Seed for the Searge LLM prompting node",
+      "properties": {
+        "Run widget replace on values": false
+      },
+      "widgets_values": [
+        1337,
+        "fixed"
+      ],
+      "color": "#332922",
+      "bgcolor": "#593930"
+    },
+    {
+      "id": 32,
+      "type": "Searge_LLM_Node",
+      "pos": [
+        10,
+        360
+      ],
+      "size": {
+        "0": 340,
+        "1": 510
+      },
+      "flags": {
+        "pinned": true
+      },
+      "order": 6,
+      "mode": 0,
+      "inputs": [
+        {
+          "name": "adv_options_config",
+          "type": "SRGADVOPTIONSCONFIG",
+          "link": null
+        },
+        {
+          "name": "random_seed",
+          "type": "INT",
+          "link": 43,
+          "widget": {
+            "name": "random_seed"
+          }
+        }
+      ],
+      "outputs": [
+        {
+          "name": "generated",
+          "type": "STRING",
+          "links": [
+            44,
+            45,
+            46
+          ],
+          "slot_index": 0,
+          "shape": 3
+        },
+        {
+          "name": "original",
+          "type": "STRING",
+          "links": null,
+          "shape": 3
+        }
+      ],
+      "properties": {
+        "Node name for S&R": "Searge_LLM_Node"
+      },
+      "widgets_values": [
+        "A psychedelic animal frozen in a jar on a wooden table, sci-fi, wide angle",
+        1337,
+        "Mistral-7B-Instruct-v0.3.Q4_K_M.gguf",
+        4096,
+        true,
+        "Generate a prompt from \"{prompt}\""
+      ],
+      "color": "#232",
+      "bgcolor": "#353"
     }
   ],
   "links": [
@@ -518,14 +571,6 @@
       "MODEL"
     ],
     [
-      33,
-      25,
-      0,
-      22,
-      0,
-      "*"
-    ],
-    [
       36,
       27,
       0,
@@ -542,22 +587,6 @@
       "CLIP"
     ],
     [
-      38,
-      25,
-      0,
-      28,
-      1,
-      "STRING"
-    ],
-    [
-      39,
-      25,
-      0,
-      28,
-      2,
-      "STRING"
-    ],
-    [
       40,
       28,
       0,
@@ -572,6 +601,38 @@
       3,
       2,
       "CONDITIONING"
+    ],
+    [
+      43,
+      31,
+      0,
+      32,
+      1,
+      "INT"
+    ],
+    [
+      44,
+      32,
+      0,
+      22,
+      0,
+      "*"
+    ],
+    [
+      45,
+      32,
+      0,
+      28,
+      1,
+      "STRING"
+    ],
+    [
+      46,
+      32,
+      0,
+      28,
+      2,
+      "STRING"
     ]
   ],
   "groups": [],
