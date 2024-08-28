@@ -47,7 +47,7 @@ class Searge_LLM_Node:
             }
         }
 
-    CATEGORY = "Searge-LLM"
+    CATEGORY = "Searge/LLM"
     FUNCTION = "main"
     RETURN_TYPES = ("STRING", "STRING",)
     RETURN_NAMES = ("generated", "original",)
@@ -189,13 +189,14 @@ class Searge_Output_Node:
             }
         }
 
-    CATEGORY = "Searge-LLM"
+    CATEGORY = "Searge/LLM"
     FUNCTION = "main"
     RETURN_TYPES = ()
+    RETURN_NAMES = ()
     OUTPUT_NODE = True
 
     def main(self, text):
-        return {"ui": {"text": (text,)}}
+        return {"ui": {"text": (str(text),)}}
 
 
 class Searge_AdvOptionsNode:
@@ -203,14 +204,14 @@ class Searge_AdvOptionsNode:
     def INPUT_TYPES(cls):
         return {
             "required": {
-                "temperature": ("FLOAT", {"default": 1.0, "min": 0.1, "step": 0.1}),
-                "top_p": ("FLOAT", {"default": 0.9, "min": 0.1, "step": 0.1}),
+                "temperature": ("FLOAT", {"default": 1.0, "min": 0.1, "step": 0.05}),
+                "top_p": ("FLOAT", {"default": 0.9, "min": 0.1, "step": 0.05}),
                 "top_k": ("INT", {"default": 50, "min": 0}),
-                "repetition_penalty": ("FLOAT", {"default": 1.2, "min": 0.1, "step": 0.1}),
+                "repetition_penalty": ("FLOAT", {"default": 1.2, "min": 0.1, "step": 0.05}),
             }
         }
 
-    CATEGORY = "Searge-LLM"
+    CATEGORY = "Searge/LLM"
     FUNCTION = "main"
     RETURN_TYPES = ("SRGADVOPTIONSCONFIG",)
     RETURN_NAMES = ("adv_options_config",)
@@ -228,12 +229,12 @@ class Searge_AdvOptionsNode:
 
 NODE_CLASS_MAPPINGS = {
     "Searge_LLM_Node": Searge_LLM_Node,
-    "Searge_Output_Node": Searge_Output_Node,
     "Searge_AdvOptionsNode": Searge_AdvOptionsNode,
+    "Searge_Output_Node": Searge_Output_Node,
 }
 
 NODE_DISPLAY_NAME_MAPPINGS = {
     "Searge_LLM_Node": "Searge LLM Node",
-    "Searge_Output_Node": "Searge Output Node",
     "Searge_AdvOptionsNode": "Searge Advanced Options Node",
+    "Searge_Output_Node": "Searge Output Node",
 }

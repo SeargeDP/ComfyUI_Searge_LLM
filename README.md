@@ -1,4 +1,4 @@
-# Searge-LLM for ComfyUI v1.0
+# Searge-LLM for ComfyUI
 
 A prompt-generator or prompt-improvement node for ComfyUI, utilizing the power of a language model to turn a provided
 text-to-image prompt into a more detailed and improved prompt.
@@ -30,6 +30,16 @@ If you get error message about missing `llama-cpp`, try these manual steps:
 python -m pip install https://github.com/oobabooga/llama-cpp-python-cuBLAS-wheels/releases/download/cpu/llama_cpp_python-0.2.89+cpuavx2-cp311-cp311-win_amd64.whl
 python -m pip install https://github.com/oobabooga/llama-cpp-python-cuBLAS-wheels/releases/download/textgen-webui/llama_cpp_python_cuda-0.2.89+cu121-cp311-cp311-win_amd64.whl
 ```
+
+### FAQ
+- "I still get errors related to llama-cpp, what should I do?"
+  - You can try manually installing llama-cpp in the python environment that you use to run ComfyUI. To do that first
+    uninstall any package including the name llama cpp from your python environment. After that you can install the
+    llama-cpp package with the command `python -m pip install llama-cpp-python`. If the problem persist after these
+    steps, please report it in the Github issue tracker of this project.
+- "Can you add [FEATURE] to this node?"
+  - Maybe. Maybe not. You can always post your idea in the issue tracker on Github as a feature request and if I like
+    the idea and find the time for it, I may implement it in a future update.
 
 ## Searge LLM Node
 Configure the `Searge_LLM_Node` with the necessary parameters within your ComfyUI project to utilize its capabilities
