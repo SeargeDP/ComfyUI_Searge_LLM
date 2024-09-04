@@ -186,7 +186,10 @@ class Searge_Output_Node:
         return {
             "required": {
                 "text": (anytype, {}),
-            }
+            },
+            "hidden": {
+                "unique_id": "UNIQUE_ID", "extra_pnginfo": "EXTRA_PNGINFO",
+            },
         }
 
     CATEGORY = "Searge/LLM"
@@ -195,7 +198,16 @@ class Searge_Output_Node:
     RETURN_NAMES = ()
     OUTPUT_NODE = True
 
-    def main(self, text):
+    def main(self, text, unique_id=None, extra_pnginfo=None):
+        if unique_id is not None and extra_pnginfo is not None and len(extra_pnginfo) > 0:
+            workflow = None
+            if "workflow" in extra_pnginfo:
+                workflow = extra_pnginfo["workflow"]
+            node = None
+            if workflow and "nodes" in workflow:
+                node = next((x for x in workflow["nodes"] if str(x["id"]) == unique_id), None)
+            if node:
+                node["widgets_values"] = [str(text)]
         return {"ui": {"text": (str(text),)}}
 
 
