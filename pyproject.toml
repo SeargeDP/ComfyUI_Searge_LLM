@@ -1,0 +1,15 @@
+[project]
+name = "comfyui_searge_llm"
+description = "A prompt-generator or prompt-improvement node for ComfyUI, utilizing the power of a language model to turn a provided text-to-image prompt into a more detailed and improved prompt."
+version = "1.0.0"
+license = {file = "LICENSE"}
+dependencies = ["transformers>=4.0.0", "torch>=1.7.1", "accelerate", "# llama-cpp-python (CPU only, AVX2)", "https://github.com/oobabooga/llama-cpp-python-cuBLAS-wheels/releases/download/cpu/llama_cpp_python-0.2.89+cpuavx2-cp311-cp311-linux_x86_64.whl; platform_system == \"Linux\" and platform_machine == \"x86_64\" and python_version == \"3.11\"", "https://github.com/oobabooga/llama-cpp-python-cuBLAS-wheels/releases/download/cpu/llama_cpp_python-0.2.89+cpuavx2-cp310-cp310-linux_x86_64.whl; platform_system == \"Linux\" and platform_machine == \"x86_64\" and python_version == \"3.10\"", "https://github.com/oobabooga/llama-cpp-python-cuBLAS-wheels/releases/download/cpu/llama_cpp_python-0.2.89+cpuavx2-cp311-cp311-win_amd64.whl; platform_system == \"Windows\" and python_version == \"3.11\"", "https://github.com/oobabooga/llama-cpp-python-cuBLAS-wheels/releases/download/cpu/llama_cpp_python-0.2.89+cpuavx2-cp310-cp310-win_amd64.whl; platform_system == \"Windows\" and python_version == \"3.10\"", "# llama-cpp-python (CUDA, no tensor cores)", "https://github.com/oobabooga/llama-cpp-python-cuBLAS-wheels/releases/download/textgen-webui/llama_cpp_python_cuda-0.2.89+cu121-cp311-cp311-win_amd64.whl; platform_system == \"Windows\" and python_version == \"3.11\"", "https://github.com/oobabooga/llama-cpp-python-cuBLAS-wheels/releases/download/textgen-webui/llama_cpp_python_cuda-0.2.89+cu121-cp310-cp310-win_amd64.whl; platform_system == \"Windows\" and python_version == \"3.10\"", "https://github.com/oobabooga/llama-cpp-python-cuBLAS-wheels/releases/download/textgen-webui/llama_cpp_python_cuda-0.2.89+cu121-cp311-cp311-linux_x86_64.whl; platform_system == \"Linux\" and platform_machine == \"x86_64\" and python_version == \"3.11\"", "https://github.com/oobabooga/llama-cpp-python-cuBLAS-wheels/releases/download/textgen-webui/llama_cpp_python_cuda-0.2.89+cu121-cp310-cp310-linux_x86_64.whl; platform_system == \"Linux\" and platform_machine == \"x86_64\" and python_version == \"3.10\""]
+
+[project.urls]
+Repository = "https://github.com/SeargeDP/ComfyUI_Searge_LLM"
+#  Used by Comfy Registry https://comfyregistry.org
+
+[tool.comfy]
+PublisherId = ""
+DisplayName = "ComfyUI_Searge_LLM"
+Icon = ""
