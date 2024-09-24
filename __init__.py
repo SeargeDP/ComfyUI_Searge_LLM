@@ -2,11 +2,6 @@ import platform
 import sys
 import os
 import subprocess
-
-#install torch if not available 
-subprocess.check_call([sys.executable, "-m", "pip", "install", "torch>=1.7.1"])
-
-#import torch
 import torch
 
 # Python version and platform checks
@@ -19,10 +14,7 @@ print(f"Detected platform system: {platform_system}")
 print(f"Detected platform machine: {platform_machine}")
 
 # List of dependencies
-requirements = [
-    "transformers>=4.0.0",
-    "accelerate"
-]
+requirements = []
 
 # llama-cpp-python (CPU only, AVX2)
 cpu_wheels = {
