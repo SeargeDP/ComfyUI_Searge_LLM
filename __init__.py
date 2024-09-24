@@ -3,6 +3,12 @@ import sys
 import os
 import subprocess
 
+#install torch if not available 
+subprocess.check_call([sys.executable, "-m", "pip", "install", "torch>=1.7.1"])
+
+#import torch
+import torch
+
 # Python version and platform checks
 python_version = f"{sys.version_info.major}.{sys.version_info.minor}"
 platform_system = platform.system()
@@ -15,7 +21,6 @@ print(f"Detected platform machine: {platform_machine}")
 # List of dependencies
 requirements = [
     "transformers>=4.0.0",
-    "torch>=1.7.1",
     "accelerate"
 ]
 
